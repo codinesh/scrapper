@@ -1,0 +1,9 @@
+{
+  "name": "scrapeweb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^20.7.4"
+  }
+}
