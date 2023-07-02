@@ -2,38 +2,44 @@ const fs = require('fs')
 
 const puppeteer = require('puppeteer')
 
+const args = process.argv.slice(2)
+console.log('Parameters:', args)
+
+let url = 'https://www.cypherhunter.com/en/t/defi'
+if (args && args.length > 0) {
+  url = args[0]
+}
+
 ;(async () => {
   const browser = await puppeteer.launch({ headless: false ?? 'new' })
   const page = await browser.newPage()
-  await page.goto('https://www.cypherhunter.com/en/t/defi/')
+  await page.goto(url)
 
-  let main = await page.$('main>div')
-  let currentPage = 0
+  let currentPage = 1
+  let totalPages = 45
   let list = []
 
   try {
     while (true) {
       currentPage++
+      let main = await page.$('main>div')
       let currentPageList = await main.$$eval('a', (a) =>
         a.map((x) => ({ title: x.title, path: x.href }))
       )
 
-      // if (list.length == 5) break
-
-      list.push(...currentPageList)
-      let nextButton = await page.$('a[title=next]')
-      console.log('Processed page', currentPage)
-
-      if (nextButton) {
-        console.log('Found next page')
-        await nextButton.click()
-      } else {
-        console.log('Reached end at page', currentPage)
+      if (!currentPageList || currentPageList.length == 0) {
         break
       }
+
+      // if (list.length == 5) break
+      list.push(...currentPageList)
+      console.log('currentPage1', currentPage)
+
+      await page.goto(url + '/page/' + currentPage)
+      console.log('currentPage2', currentPage)
     }
   } catch (ex) {
-    //
+    console.error(ex)
   } finally {
     console.log(list.length)
     saveItems('defi', list)
