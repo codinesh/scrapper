@@ -6,12 +6,14 @@ console.log('Parameters:', args)
 
 let category = ''
 if (args && args.length > 0) {
-  category = args[0]
+  category = args[1]
 }
 
 ;(async () => {
-  console.log('cat', category)
-  if (category) await getAllDetails()
+  if (category) {
+    await getAllDetails()
+    console.log('Fetching details for items in category', category)
+  } else console.log('No category provided')
 })()
 
 async function getAllDetails() {

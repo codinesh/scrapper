@@ -10,7 +10,7 @@
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${file}",
-      "args": ["defi"]
+      "args": ["https://www.cypherhunter.com/en/t/defi", "defi"]
     }
   ]
 }

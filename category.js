@@ -12,9 +12,8 @@ if (args && args.length > 0) {
 }
 
 ;(async () => {
+  console.log('Fetching categories from the url', url)
   await getCategories()
-
-  await getAllDetails()
 })()
 
 async function getCategories() {
